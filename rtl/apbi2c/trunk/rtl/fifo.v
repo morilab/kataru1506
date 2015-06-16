@@ -75,8 +75,8 @@
 `timescale 1ns/1ps
 module fifo
 #(
-	parameter integer DWIDTH = 32,
-	parameter integer AWIDTH = 4
+	parameter DWIDTH = 32,
+	parameter AWIDTH = 4
 )
 
 (

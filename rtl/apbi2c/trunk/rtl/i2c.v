@@ -74,27 +74,27 @@
 ////
 ///////////////////////////////////////////////////////////////////
 
-`timescale 1ns/1ps //timescale 
+`timescale 1ns/1ps
 
 module i2c(
 	//APB PORTS
-	input PCLK,
-	input PRESETn,
-	input [31:0] PADDR,
-	input [31:0] PWDATA,
-	input PWRITE,
-	input PSELx,
-	input PENABLE,
-	output PREADY,
-	output PSLVERR,
-	output INT_RX,
-	output INT_TX,
-	output [31:0] PRDATA,
+	input  wire PCLK,
+	input  wire PRESETn,
+	input  wire [31:0] PADDR,
+	input  wire [31:0] PWDATA,
+	input  wire PWRITE,
+	input  wire PSELx,
+	input  wire PENABLE,
+	output wire  PREADY,
+	output wire  PSLVERR,
+	output wire  INT_RX,
+	output wire  INT_TX,
+	output wire  [31:0] PRDATA,
 	//I2C OUTPUT
-	output SDA_ENABLE,
-	output SCL_ENABLE,
-	inout SDA,
-	inout SCL
+	output wire  SDA_ENABLE,
+	output wire  SCL_ENABLE,
+	inout  wire SDA,
+	inout  wire SCL
 
 	  );
 

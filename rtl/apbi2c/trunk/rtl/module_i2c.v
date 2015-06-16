@@ -75,12 +75,12 @@
 ///////////////////////////////////////////////////////////////////
 
 
-`timescale 1ns/1ps //timescale 
+`timescale 1ns/1ps
 
 module module_i2c#(
 			//THIS IS USED ONLY LIKE PARAMETER TO BEM CONFIGURABLE
-			parameter integer DWIDTH = 32,
-			parameter integer AWIDTH = 14
+			parameter DWIDTH = 32,
+			parameter AWIDTH = 14
 		)
 		(
 		//I2C INTERFACE WITH ANOTHER BLOCKS
