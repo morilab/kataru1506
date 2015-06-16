@@ -1,0 +1,14 @@
+#!/bin/csh -f
+
+foreach file ( \
+  work         \
+  transcript   \
+  vsim.wlf     \
+  modelsim.ini \
+  cov.cdd      \
+)
+  if(-e $file)then
+    echo "Delete $file"
+    rm -r -f $file
+  endif
+end

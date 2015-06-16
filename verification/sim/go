@@ -1,0 +1,287 @@
+#!/bin/csh -f
+ setenv OVMHOME          ../lib/ovm-2.0.3
+ setenv OVLHOME          ../lib/std_ovl
+#setenv XILINX           c:\\Xilinx/xxx/ISE_DS/ISE
+ setenv XILINX           ../lib/xilinx
+#setenv ALTERA           d:\\altera/xxx/quartus/eda
+ setenv ALTERA           ../lib/altera
+
+ set    PATH_LOG        = ./log
+ set    PATH_COV        = ./cov
+ set    TB              = apb2iic
+ set    TP              = test0001
+ set    OVM_ML          = OVM_LOW
+ set    COMP_COV_OPT    = ""
+ set    SIM_COV_OPT     = ""
+
+#使用OVMモデル一覧        
+ set    OVM_MODEL       = (scoreboard packet)
+#<OVM_MODEL>
+#</>
+
+##############################################################################
+# 以下は原則として修正不要
+set    MONO          = ""
+set    VSIMMODE      = "-c"
+set    LIST          = 0
+set    SIM_DO_FILE   = "../script/vsim.do"
+
+# オプションの読み込み #######################################################
+@ args = 1
+set arg_num = $#argv
+while($args <= $arg_num)
+    switch ($argv[$args])
+        case -tb:
+            @ args += 1
+            set TB = "$argv[$args]"
+            set TN = verienv_${TB}_test0001
+            breaksw
+        case -tn:
+            @ args += 1
+           #set TN = "verienv_${TB}_$argv[$args]"
+            set TP = "$argv[$args]"
+            breaksw
+        case -ovm_ml:
+            @ args += 1
+            set OVM_ML = "$argv[$args]"
+            breaksw
+        case -mono:
+            set MONO = "+define+VT100_MONO"
+            breaksw
+        case -gui:
+            set VSIMMODE = "-gui"
+            breaksw
+        case -list:
+            set LIST = 1
+            breaksw
+        case -cov:
+            set COMP_COV_OPT = ""
+            set SIM_COV_OPT  = ""
+            set SIM_DO_FILE  = "../script/vsim_cov.do"
+            breaksw
+        default:
+            goto Help
+            breaksw
+    endsw
+    @ args += 1
+end
+
+set TN = verienv_${TB}_${TP}
+set TL = ${TB}_${TP}
+
+# テスト環境、パタンの一覧表示 ###############################################
+if($LIST) then
+    foreach verienv (`find ../tb/verienv/ -maxdepth 1 -mindepth 1 -type d | awk 'BEGIN{FS="/";}{printf(" %s",$4);}'`)
+        echo "検証環境${verienv}テストパタン一覧"
+        find ../tb/verienv/${verienv}/test/ -type f -name '*test.sv' | awk 'match($0,/_[^_]+_test.sv/){printf(" %s",substr($0,RSTART+1,RLENGTH-9))}'
+        echo ""
+    end
+    exit 0
+endif
+
+# シミュレーション用ワークフォルダの作成 #####################################
+set    VLIB_DIR  = ./work
+if(-f "$VLIB_DIR") then
+else
+	echo "ModelSim用ワークフォルダ(./work)を作成します。"
+	mkdir $VLIB_DIR
+endif
+
+# OVM 2.0.3 compile ##########################################################
+if(-f "$VLIB_DIR/ovm") then
+else
+	echo "OVMライブラリ(./work/ovm)を作成します。"
+	echo " - ovm_pkg"
+	vlib     $VLIB_DIR/ovm
+	vmap ovm $VLIB_DIR/ovm
+	vlog +sv -nowarn 12 ${MONO} $OVMHOME/src/ovm_pkg.sv +incdir+$OVMHOME/src -work ovm
+	if($status) then
+		goto Error
+	endif
+	echo " - ovm_container"
+	vlog +sv ${MONO} ../lib/ovm_container.sv -work ovm
+	if($status) then
+		goto Error
+	endif
+	echo " - message"
+	vlog +sv ${MONO} ../lib/message.sv -work ovm
+	if($status) then
+		goto Error
+	endif
+endif
+
+# ユーザーモデルライブラリ compile ###########################################
+if(-f "$VLIB_DIR/ovm_model_lib") then
+else
+	echo "OVMモデルライブラリ(./work/ovm_model_lib)を作成します。"
+	vlib               $VLIB_DIR/ovm_model_lib
+	vmap ovm_model_lib $VLIB_DIR/ovm_model_lib
+endif
+foreach MODEL ( $OVM_MODEL )
+	echo " - $MODEL"
+	vlog +sv ${MONO} \
+		+incdir+$OVMHOME/src             \
+		-L ovm                           \
+		+incdir+../lib                   \
+		+incdir+../tb/model/$MODEL       \
+		../tb/model/$MODEL/${MODEL}.svh  \
+		-work ovm_model_lib 
+	if($status) then
+		goto Error
+	endif
+end
+
+# RTL compile ################################################################
+if(-f "$VLIB_DIR/design") then
+else
+	echo "デバイス用ライブラリ(./work/design)を作成します。"
+	vlib        $VLIB_DIR/design
+	vmap design $VLIB_DIR/design
+endif
+vlog  ${MONO} \
+	-f ../tb/verienv/${TB}/design.f      \
+	-y $XILINX/verilog/src/simprims      \
+	-y $XILINX/verilog/src/unisims       \
+	-y $XILINX/verilog/src/XilinxCoreLib \
+	-y $ALTERA/sim_lib                   \
+	+libext+.v -incr                     \
+	${COMP_COV_OPT}                      \
+	-work design
+if($status) then
+	goto Error
+endif
+
+# work compile ###############################################################
+if(-f "$VLIB_DIR/work") then
+	\rm -r -f $VLIB_DIR/work
+endif
+echo "検証環境ライブラリ(./work/work)を作成します。"
+vlib $VLIB_DIR/work
+vmap work $VLIB_DIR/work
+vlog +sv ${MONO} -nowarn 12 \
+	-L ovm                                \
+	-L ovm_model_lib                      \
+	+incdir+$OVMHOME/src                  \
+	+incdir+../lib                        \
+	+incdir+../tb/model                   \
+	+incdir+../tb/verienv/${TB}           \
+	../tb/verienv/${TB}/verienv_${TB}.svh \
+	../tb/verienv/${TB}/tb_top.sv         \
+	$XILINX/verilog/src/glbl.v            \
+	\
+	+define+OVL_ASSERT_ON                 \
+	+define+OVL_COVER_ON                  \
+	+define+OVL_MAX_REPORT_ERROR=1        \
+	+define+OVL_INIT_MSG                  \
+	+define+OVL_VERILOG                   \
+	+libext+.v+.vlib                      \
+	-y $OVLHOME                           \
+	+incdir+$OVLHOME                      \
+	-timescale "1 ps / 1 ps"              \
+	\
+	-work work 
+if($status) then
+	goto Error
+endif
+
+# simulation #################################################################
+echo "シミュレーションを開始します。"
+set start_time = `date`
+vsim ${VSIMMODE} \
+	work.tb_top                      \
+	work.glbl                        \
+	-do ${SIM_DO_FILE}               \
+	-L ovm                           \
+	-L ovm_model_lib                 \
+	-L design                        \
+	-L work                          \
+	+OVM_VERBOSITY=${OVM_ML}         \
+	+OVM_TESTNAME=${TN}
+if($status) then
+	goto Error
+endif
+set end_time = `date`
+
+# 正常終了 ###################################################################
+if(-d "$PATH_LOG") then
+else
+	echo "Log用フォルダ(${PATH_LOG})を作成します。"
+	mkdir ${PATH_LOG}
+endif
+cp -r -f transcript ${PATH_LOG}/${TL}.log
+
+if(-e dump.vcd) then
+	echo "カバレッジデータ格納..."
+	if(-d "$PATH_COV") then
+	else
+		echo "Coverage用フォルダ(${PATH_COV})を作成します。"
+		mkdir ${PATH_COV}
+	endif
+	cp -r -f dump.vcd ${PATH_COV}/${TL}.vcd
+	\rm -r -f dump.vcd
+	covered score -t tb_top \
+                -v ../tb/verienv/apb2iic/tb_top_cov.v \
+                -v ../tb/verienv/apb2iic/DUV_cov.v \
+                -y ../../rtl/apbi2c/trunk/rtl/ \
+                -vcd ${PATH_COV}/${TL}.vcd \
+                -o   ${PATH_COV}/${TL}.cdd \
+
+	\rm -r -f merge.vcd
+        covered merge -o merge.cdd ${PATH_COV}/*.cdd
+        covered report -o coverage.rpt merge.cdd
+endif
+
+echo "シミュレーションが終了しました。"
+echo "  開始：${start_time}"
+echo "  終了：${end_time}"
+exit 0
+
+# ヘルプ #####################################################################
+Help:
+set TN = verienv_${TB}_${TP}
+set REV    = `echo '$Revision: 1.11 $' | cut -d " " -f 2`
+set UPDATE = `echo '$Date: 2013/07/31 04:20:09 $' | cut -d " " -f 2-3`
+echo "OVMシミュレーション実行スクリプト rev${REV} (LastUpdate ${UPDATE})"
+echo "<OPTIONS>"
+echo "-list               : 検証環境とシナリオの一覧を表示"
+echo "-tb {bench name}    : 実行するテスト環境名の指定(デフォルト:${TB})"
+echo "-tn {test name}     : 実行するovm_testクラス名の指定(デフォルト:${TN})"
+echo "-ovm_ml {level}     : OVMメッセージ表示レベル(default:${OVM_ML}) 最低限の表示<--->低優先も表示"
+echo "                    : {OVM_NONE,OVM_LOW,OVM_MEDIUM,OVM_HIGH,OVM_FULL,OVM_DEBUG}"
+echo "-gui                : simulation execute GUI. (default:command prompt)"
+echo "-cov                : カバレッジを取得する(./cov/...)"
+echo "-mono               : カラー表示の抑制"
+
+exit 1
+
+# 異常終了 ###################################################################
+Error:
+echo "       #######"
+echo "       #"
+echo "       #"
+echo "       #         # ###   # ###   ###     # ###"
+echo "       ######    ##      ##     #   #    ##"
+echo "       #         #       #     #     #   #"
+echo "       #         #       #     #     #   #"
+echo "       #         #       #      #   #    #"
+echo "       #######   #       #       ###     #"
+echo '                 -‐==ミ .                    '
+echo '             ／´        ヽヽ                 '
+echo '            /            ﾉﾉ_/                 '
+echo '          //        ／"ア⌒ヽ⌒＼             '
+echo '         /         / { {{  八    "､ エラー!   '
+echo '       〈/        | 八   ∨ ｲ     い          '
+echo '             f⌒)|八 |＞＼/＜ |ノ||八         '
+echo '              ＼ ∨ ｢"  r’┐"∠ィ|)  ＼__    '
+echo '                ∨ 人    ､_/    ｲ|  , ＼  ＼  '
+echo '               ／ ∧｣｣≧,=y≦ト八  V⌒)   厂  '
+echo '             ／  /   ﾉ  "ｰ什ﾄ|├‐)  )く  ＼  '
+echo '            /  （  （  くr::::└∠／    ＼厂  '
+echo '            |／＼ ＼|＼r｢|::::r＜ F_ヲ/⌒     '
+echo '                 ＼ﾉ  厶乂＿／Ｘ/┘,｣::＼     '
+echo '                        |::|ﾏ┴く￣￣＼厂     '
+echo '                        l∧|ー‐ﾍ             '
+echo '                              ＼∧            '
+echo '                                ｰ"            '
+
+exit 1

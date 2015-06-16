@@ -1,0 +1,5 @@
+cov
+log
+*.cdd
+coverage.rpt
+*.do
