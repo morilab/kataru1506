@@ -3,3 +3,8 @@ log
 *.cdd
 coverage.rpt
 *.do
+go.rb
+modelsim.ini
+transcript
+vsim.wlf
+work/
