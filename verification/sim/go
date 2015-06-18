@@ -3,7 +3,7 @@
  setenv OVLHOME          ../lib/std_ovl
 #setenv XILINX           c:\\Xilinx/xxx/ISE_DS/ISE
  setenv XILINX           ../lib/xilinx
-#setenv ALTERA           d:\\altera/xxx/quartus/eda
+#setenv ALTERA           c:\\altera/xxx/quartus/eda
  setenv ALTERA           ../lib/altera
 
  set    PATH_LOG        = ./log
@@ -105,6 +105,11 @@ else
 	endif
 	echo " - message"
 	vlog +sv ${MONO} ../lib/message.sv -work ovm
+	if($status) then
+		goto Error
+	endif
+	echo " - ovm_container"
+	vlog +sv ${MONO} ../lib/xml_report_server.svh -work ovm
 	if($status) then
 		goto Error
 	endif

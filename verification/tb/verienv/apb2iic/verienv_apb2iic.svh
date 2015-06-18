@@ -17,6 +17,7 @@ package verienv_apb2iic_pkg;
 	import ovm_pkg::*;
 	import ovm_container_pkg::*;
 	import ovm_ScoreBoard_pkg::*; ///< OVMスコアボード
+	import xml_report_server_pkg::*;
 	/* 必要なモデルがある場合はここでインポートする */
 	
 	`include "verienv_apb2iic_share.sv"       // 共通変数

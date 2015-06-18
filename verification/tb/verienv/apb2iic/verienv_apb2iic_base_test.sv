@@ -17,7 +17,8 @@ class verienv_apb2iic_base_test extends ovm_test;
 	// 機能モデル
 	verienv_apb2iic_config       m_config;         ///< テストコンフィグ
 	verienv_apb2iic_v_sequencer  sys_v_sequencer;  ///< シーケンサ
-	ovm_table_printer         printer;          ///< メッセージ表示用プリンタ
+	ovm_table_printer            printer;          ///< メッセージ表示用プリンタ
+	xml_report_server            xml_reporter;     ///< XMLログサーバ
 	
 	/// コンストラクタ
 	function new(string name="" ,ovm_component parent=null);
@@ -36,6 +37,7 @@ class verienv_apb2iic_base_test extends ovm_test;
 		// オーバーライド
 		
 		// コンポーネント生成
+		xml_reporter    = new({"log/",get_type_name()});
 		sys_v_sequencer = verienv_apb2iic_v_sequencer::type_id::create  ("sys_v_sequencer" ,this);
 		
 		// コンフィグレーションオブジェクトの展開
@@ -59,12 +61,13 @@ class verienv_apb2iic_base_test extends ovm_test;
 	
 	/// 検証環境構成の表示
 	function void end_of_elaboration();
-		`ovm_info(get_type_name(),$psprintf("<<< Verification Infomation >>>\n%s", this.sprint(printer)), OVM_LOW)
+		xml_reporter.enable_xml_logging();
+		`ovm_info("Verification Infomation",$psprintf("<<< Verification Infomation >>>\n%s", this.sprint(printer)), OVM_LOW)
 	endfunction : end_of_elaboration
 	
 	/// シミュレーション
 	task run;
-		`ovm_info("INFO",$psprintf("%s--- Simulation Start ---%s",{`VT100_GREEN},{`VT100_NORMAL}),OVM_LOW)
+		`ovm_info("SYSTEM",$psprintf("%s--- Simulation Start ---%s",{`VT100_GREEN},{`VT100_NORMAL}),OVM_LOW)
 		// システムクロックの生成
 		// シナリオタイムアウト(10msec)
 		for(int i=0;i<10;i++)begin
@@ -79,7 +82,7 @@ class verienv_apb2iic_base_test extends ovm_test;
 		ovm_report_server rep;
 		
 		super.report;
-		`ovm_info("INFO",$psprintf("%s--- Simulation End ---%s",{`VT100_GREEN},{`VT100_NORMAL}),OVM_LOW)
+		`ovm_info("SYSTEM",$psprintf("%s--- Simulation End ---%s",{`VT100_GREEN},{`VT100_NORMAL}),OVM_LOW)
 		rep = ovm_top.get_report_server();
 		if(rep.get_severity_count(OVM_FATAL))begin
 			$display("");
