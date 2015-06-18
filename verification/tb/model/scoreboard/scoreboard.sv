@@ -9,43 +9,43 @@
 // Revision      : $Revision: 1.1 $
 // Last Update   : $Date: 2012/03/26 05:38:30 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-///@brief   ƒXƒRƒAƒ{[ƒhƒNƒ‰ƒX
-///@details Šú‘Ò’lAŠÏ‘ª’l‚ğó‚¯æ‚éƒAƒiƒŠƒVƒXƒGƒNƒXƒ|[ƒg‚ğ‚¿‚Ü‚·B
-///         ˆµ‚¤ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€‚ÌŒ^‚Íƒpƒ‰ƒ[ƒ^‚Åw’è‚µ‚Ü‚·B
-///         Šú‘Ò’l‚ÆŠÏ‘ª’l‚Ì”äŠr•û–@‚Íset_config_int‚Åw’è‚µ‚Ü‚·B
+///@brief   ã‚¹ã‚³ã‚¢ãƒœãƒ¼ãƒ‰ã‚¯ãƒ©ã‚¹
+///@details æœŸå¾…å€¤ã€è¦³æ¸¬å€¤ã‚’å—ã‘å–ã‚‹ã‚¢ãƒŠãƒªã‚·ã‚¹ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã‚’æŒã¡ã¾ã™ã€‚
+///         æ‰±ã†ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ ã®å‹ã¯ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§æŒ‡å®šã—ã¾ã™ã€‚
+///         æœŸå¾…å€¤ã¨è¦³æ¸¬å€¤ã®æ¯”è¼ƒæ–¹æ³•ã¯set_config_intã§æŒ‡å®šã—ã¾ã™ã€‚
 ////////////////////////////////////////////////////////////////////////////////
 class scoreboard #(type T=ovm_sequence_item) extends ovm_scoreboard;
 	`ovm_component_param_utils_begin(scoreboard#(T))
 		`ovm_field_string(msg_index ,OVM_ALL_ON)
 	`ovm_component_utils_end
 	
-	string                                     msg_index;            ///< ƒƒbƒZ[ƒWƒCƒ“ƒfƒbƒNƒX
-	scoreboard_subscriber #(T)                 item_comp;            ///< ”Ä—p”äŠrŠí
-	ovm_analysis_imp      #(T ,scoreboard#(T)) exp_collected_export; ///< Šú‘Ò’lƒAƒiƒŠƒVƒXƒGƒNƒXƒ|[ƒg
-	ovm_analysis_export   #(T)                 dat_collected_export; ///< ŠÏ‘ª’lƒAƒiƒŠƒVƒXƒGƒNƒXƒ|[ƒg
+	string                                     msg_index;            ///< ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	scoreboard_subscriber #(T)                 item_comp;            ///< æ±ç”¨æ¯”è¼ƒå™¨
+	ovm_analysis_imp      #(T ,scoreboard#(T)) exp_collected_export; ///< æœŸå¾…å€¤ã‚¢ãƒŠãƒªã‚·ã‚¹ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
+	ovm_analysis_export   #(T)                 dat_collected_export; ///< è¦³æ¸¬å€¤ã‚¢ãƒŠãƒªã‚·ã‚¹ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
 	
 	////////////////////////////////////////////////////////////////////////////
-	///@name OVMƒtƒF[ƒY
-	///      OVM•W€‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ƒtƒF[ƒYƒƒ\ƒbƒh
+	///@name OVMãƒ•ã‚§ãƒ¼ã‚º
+	///      OVMæ¨™æº–ã®ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ã‚§ãƒ¼ã‚ºãƒ¡ã‚½ãƒƒãƒ‰
 	//////////////////////////////////////////////////////////////////////////@{
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
 		exp_collected_export = new("exp_port",this);
 		dat_collected_export = new("dat_port",this);
 	endfunction : new
-	/// ŠÂ‹«\’z
+	/// ç’°å¢ƒæ§‹ç¯‰
 	virtual function void build();
 		super.build;
 		item_comp = scoreboard_subscriber#(T)::type_id::create("SB",this);
 	endfunction
 	
-	/// ƒRƒ“ƒ|[ƒlƒ“ƒgŠÔÚ‘±
+	/// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆé–“æ¥ç¶š
 	virtual function void connect;
 		dat_collected_export.connect(item_comp.analysis_export);
 	endfunction
 	
-	/// ŠÂ‹«İ’è
+	/// ç’°å¢ƒè¨­å®š
     virtual function void end_of_elaboration();
 		if(msg_index=="")begin
 			msg_index = $psprintf("%s",get_full_name());
@@ -53,7 +53,7 @@ class scoreboard #(type T=ovm_sequence_item) extends ovm_scoreboard;
 		item_comp.msg_index = msg_index;
     endfunction
 	
-	/// Šú‘Ò’lƒAƒiƒŠƒVƒXƒGƒNƒXƒ|[ƒgˆ—
+	/// æœŸå¾…å€¤ã‚¢ãƒŠãƒªã‚·ã‚¹ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆå‡¦ç†
 	virtual function void write(T tr);
 		T exp;
 		$cast(exp,tr.clone());
@@ -68,7 +68,7 @@ class scoreboard #(type T=ovm_sequence_item) extends ovm_scoreboard;
 	endfunction
 	//////////////////////////////////////////////////////////////////////////@}
 	
-	/// ƒXƒRƒAƒ{[ƒh‚Ì‰Šú‰»
+	/// ã‚¹ã‚³ã‚¢ãƒœãƒ¼ãƒ‰ã®åˆæœŸåŒ–
 	virtual function void reset;
 		item_comp.reset;
 	endfunction

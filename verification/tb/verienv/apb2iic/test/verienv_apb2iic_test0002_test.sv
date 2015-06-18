@@ -9,7 +9,7 @@
 // Revision      : $Revision: 1.1 $
 // Last Update   : $Date: 2012/03/26 05:37:09 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-/// top•”ŒŸØ
+/// topéƒ¨æ¤œè¨¼
 /////////////////////////////////////////////////////////////////////////////
 class verienv_apb2iic_test0002 extends verienv_apb2iic_base_test;
 	function new(string name="verienv_apb2iic_test0002" ,ovm_component parent=null);

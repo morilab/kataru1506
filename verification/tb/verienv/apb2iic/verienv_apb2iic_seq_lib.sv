@@ -9,9 +9,9 @@
 // Revision      : $Revision: 1.5 $
 // Last Update   : $Date: 2013/07/16 05:33:01 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-// verienv_apb2iicŒÅ—LƒV[ƒPƒ“ƒX
+// verienv_apb2iicå›ºæœ‰ã‚·ãƒ¼ã‚±ãƒ³ã‚¹
 /////////////////////////////////////////////////////////////////////////////
-/// verienv_apb2iic_v_sequencer—pŠî’êƒV[ƒPƒ“ƒX
+/// verienv_apb2iic_v_sequencerç”¨åŸºåº•ã‚·ãƒ¼ã‚±ãƒ³ã‚¹
 class verienv_apb2iic_base_vseq extends ovm_sequence#(ovm_sequence_item,ovm_sequence_item);
 	`ovm_sequence_utils(verienv_apb2iic_base_vseq ,verienv_apb2iic_v_sequencer)
 	function new (string name="verienv_apb2iic_vseq");
@@ -19,7 +19,7 @@ class verienv_apb2iic_base_vseq extends ovm_sequence#(ovm_sequence_item,ovm_sequ
 	endfunction : new
 	
 	///////////////////////////////////////////////////////////////////////////
-	// apb2iicŠÂ‹«‚Ì’[Žq§Œä
+	// apb2iicç’°å¢ƒã®ç«¯å­åˆ¶å¾¡
 	task set_port(verienv_apb2iic_port port ,logic[127:0] value);
 		p_sequencer.set_verienv_port(port ,value);
 	endtask
@@ -37,13 +37,13 @@ class verienv_apb2iic_base_vseq extends ovm_sequence#(ovm_sequence_item,ovm_sequ
 	endtask
 	
 	///////////////////////////////////////////////////////////////////////////
-	// ƒEƒGƒCƒgƒNƒƒbƒN
+	// ã‚¦ã‚¨ã‚¤ãƒˆã‚¯ãƒ­ãƒƒã‚¯
 	task wait_clk(int count=1);
 		p_sequencer.wait_clk(count);
 	endtask
 	
 	///////////////////////////////////////////////////////////////////////////
-	// ƒŠƒZƒbƒg
+	// ãƒªã‚»ãƒƒãƒˆ
 	task reset();
 	        set_port(PORT_PADDR,0);       ///< 
 	        set_port(PORT_PWDATA,0);      ///< 

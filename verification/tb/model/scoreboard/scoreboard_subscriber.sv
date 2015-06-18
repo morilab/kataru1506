@@ -9,55 +9,55 @@
 // Revision      : $Revision: 1.1 $
 // Last Update   : $Date: 2012/03/26 05:38:32 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-///@brief   ƒXƒRƒAƒ{[ƒh—p”äŠrŠí
-///@details w’èƒ‹[ƒ‹‚É]‚¢A2‚Â‚Ìƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€‚Ì”äŠr‚ğs‚¢‚Ü‚·B
-///         ó‚¯æ‚Á‚½Šú‘Ò’lAŠÏ‘ª’l‚Í‚»‚ê‚¼‚êƒtƒBƒ‹ƒ^ŠÖ”‚Å•K—v‚É‰‚¶‚Ä‘Oˆ—‚ğ
-///         s‚Á‚Ä‚©‚ç”äŠr‚ğs‚¢AƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“I—¹‚ÉÅIƒŒƒ|[ƒg‚ğo—Í‚µ‚Ü‚·B
+///@brief   ã‚¹ã‚³ã‚¢ãƒœãƒ¼ãƒ‰ç”¨æ¯”è¼ƒå™¨
+///@details æŒ‡å®šãƒ«ãƒ¼ãƒ«ã«å¾“ã„ã€2ã¤ã®ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ ã®æ¯”è¼ƒã‚’è¡Œã„ã¾ã™ã€‚
+///         å—ã‘å–ã£ãŸæœŸå¾…å€¤ã€è¦³æ¸¬å€¤ã¯ãã‚Œãã‚Œãƒ•ã‚£ãƒ«ã‚¿é–¢æ•°ã§å¿…è¦ã«å¿œã˜ã¦å‰å‡¦ç†ã‚’
+///         è¡Œã£ã¦ã‹ã‚‰æ¯”è¼ƒã‚’è¡Œã„ã€ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚ã«æœ€çµ‚ãƒ¬ãƒãƒ¼ãƒˆã‚’å‡ºåŠ›ã—ã¾ã™ã€‚
 ////////////////////////////////////////////////////////////////////////////////
 class scoreboard_subscriber#(type T=ovm_sequence_item) extends ovm_subscriber#(T);
-	string       msg_index;     ///< ƒƒbƒZ[ƒWƒCƒ“ƒfƒbƒNƒX
-	T            dat[$];        ///< ŠÏ‘ª’lƒŠƒXƒg
-	T            exp[$];        ///< Šú‘Ò’lƒŠƒXƒg
-	chk_rule     rule;          ///< ”äŠr•û–@İ’è
-	int          dat_item_num;  ///< ŠÏ‘ª’l‚Ì”
-	int          exp_item_num;  ///< Šú‘Ò’l‚Ì”
-	int          error_num;     ///< •sˆê’v‚µ‚½”
-	int          collect_num;   ///< ˆê’v‚µ‚½”
-	ovm_comparer cmp;           ///< ”äŠrŠí
-	protected    semaphore sem; ///< ƒZƒ}ƒtƒH
+	string       msg_index;     ///< ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	T            dat[$];        ///< è¦³æ¸¬å€¤ãƒªã‚¹ãƒˆ
+	T            exp[$];        ///< æœŸå¾…å€¤ãƒªã‚¹ãƒˆ
+	chk_rule     rule;          ///< æ¯”è¼ƒæ–¹æ³•è¨­å®š
+	int          dat_item_num;  ///< è¦³æ¸¬å€¤ã®æ•°
+	int          exp_item_num;  ///< æœŸå¾…å€¤ã®æ•°
+	int          error_num;     ///< ä¸ä¸€è‡´ã—ãŸæ•°
+	int          collect_num;   ///< ä¸€è‡´ã—ãŸæ•°
+	ovm_comparer cmp;           ///< æ¯”è¼ƒå™¨
+	protected    semaphore sem; ///< ã‚»ãƒãƒ•ã‚©
 	
 	`ovm_component_param_utils_begin(scoreboard_subscriber#(T))
 		`ovm_field_string(msg_index       ,OVM_ALL_ON)
 		`ovm_field_enum  (chk_rule  ,rule ,OVM_ALL_ON)
 	`ovm_component_utils_end
 	
-	///@brief   Šú‘Ò’lƒtƒBƒ‹ƒ^
-	///@details Šú‘Ò’lƒŠƒXƒg‚Ö’Ç‰Á‚·‚é‘O‚ÉAƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€©‘Ì‚ğ
-	///         •ÏX‚·‚é‚±‚Æ‚ª‰Â”\‚Å‚·B
-	///@return  ƒŠƒXƒg‚Ö’Ç‰Á‚·‚éƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€‚ÌQÆ‚ğ•Ô‚µ‚Ü‚·B
-	///         null‚Ìê‡AƒŠƒXƒg‚Ö‚Í’Ç‰Á‚³‚ê‚Ü‚¹‚ñB
-	///@note    ˆê”Ê“I‚É‚ÍŠÖ”‚ÌƒI[ƒo[ƒ‰ƒCƒh‚ğs‚¢AŠú‘Ò‚µ‚½“®ì‚ğ‚·‚é‚æ‚¤‚ÉC³‚µ‚Ü‚·B
+	///@brief   æœŸå¾…å€¤ãƒ•ã‚£ãƒ«ã‚¿
+	///@details æœŸå¾…å€¤ãƒªã‚¹ãƒˆã¸è¿½åŠ ã™ã‚‹å‰ã«ã€ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ è‡ªä½“ã‚’
+	///         å¤‰æ›´ã™ã‚‹ã“ã¨ãŒå¯èƒ½ã§ã™ã€‚
+	///@return  ãƒªã‚¹ãƒˆã¸è¿½åŠ ã™ã‚‹ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ ã®å‚ç…§ã‚’è¿”ã—ã¾ã™ã€‚
+	///         nullã®å ´åˆã€ãƒªã‚¹ãƒˆã¸ã¯è¿½åŠ ã•ã‚Œã¾ã›ã‚“ã€‚
+	///@note    ä¸€èˆ¬çš„ã«ã¯é–¢æ•°ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã‚’è¡Œã„ã€æœŸå¾…ã—ãŸå‹•ä½œã‚’ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£ã—ã¾ã™ã€‚
 	virtual function T exp_filter(T tr);
 		return tr;
 	endfunction
 	
-	///@brief   ŠÏ‘ª’lƒtƒBƒ‹ƒ^
-	///@details ŠÏ‘ª’lƒŠƒXƒg‚Ö’Ç‰Á‚·‚é‘O‚ÉAƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€©‘Ì‚ğ
-	///         •ÏX‚·‚é‚±‚Æ‚ª‰Â”\‚Å‚·B
-	///@return  ƒŠƒXƒg‚Ö’Ç‰Á‚·‚éƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€‚ÌQÆ‚ğ•Ô‚µ‚Ü‚·B
-	///         null‚Ìê‡AƒŠƒXƒg‚Ö‚Í’Ç‰Á‚³‚ê‚Ü‚¹‚ñB
-	///@note    ˆê”Ê“I‚É‚ÍŠÖ”‚ÌƒI[ƒo[ƒ‰ƒCƒh‚ğs‚¢AŠú‘Ò‚µ‚½“®ì‚ğ‚·‚é‚æ‚¤‚ÉC³‚µ‚Ü‚·B
+	///@brief   è¦³æ¸¬å€¤ãƒ•ã‚£ãƒ«ã‚¿
+	///@details è¦³æ¸¬å€¤ãƒªã‚¹ãƒˆã¸è¿½åŠ ã™ã‚‹å‰ã«ã€ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ è‡ªä½“ã‚’
+	///         å¤‰æ›´ã™ã‚‹ã“ã¨ãŒå¯èƒ½ã§ã™ã€‚
+	///@return  ãƒªã‚¹ãƒˆã¸è¿½åŠ ã™ã‚‹ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ ã®å‚ç…§ã‚’è¿”ã—ã¾ã™ã€‚
+	///         nullã®å ´åˆã€ãƒªã‚¹ãƒˆã¸ã¯è¿½åŠ ã•ã‚Œã¾ã›ã‚“ã€‚
+	///@note    ä¸€èˆ¬çš„ã«ã¯é–¢æ•°ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã‚’è¡Œã„ã€æœŸå¾…ã—ãŸå‹•ä½œã‚’ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£ã—ã¾ã™ã€‚
 	virtual function T dat_filter(T tr);
 		return tr;
 	endfunction
 	
 	////////////////////////////////////////////////////////////////////////////
-	///@name ”äŠrˆ—
-	///      Šú‘Ò’lAŠÏ‘ª’l‚Ì”äŠr‚ğs‚¤ŠÖ”ŒQ‚Å‚·B
+	///@name æ¯”è¼ƒå‡¦ç†
+	///      æœŸå¾…å€¤ã€è¦³æ¸¬å€¤ã®æ¯”è¼ƒã‚’è¡Œã†é–¢æ•°ç¾¤ã§ã™ã€‚
 	//////////////////////////////////////////////////////////////////////////@{
 	
-	///@brief   ”äŠrˆ—‚Ì‘I‘ğEÀs
-	///@details w’èƒ‹[ƒ‹‚É]‚¢A2‚Â‚Ìƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€‚Ì”äŠr‚ğs‚¢‚Ü‚·B
+	///@brief   æ¯”è¼ƒå‡¦ç†ã®é¸æŠãƒ»å®Ÿè¡Œ
+	///@details æŒ‡å®šãƒ«ãƒ¼ãƒ«ã«å¾“ã„ã€2ã¤ã®ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ ã®æ¯”è¼ƒã‚’è¡Œã„ã¾ã™ã€‚
 	virtual task do_compare_item;
 		sem.get;
 		case(rule)
@@ -69,15 +69,15 @@ class scoreboard_subscriber#(type T=ovm_sequence_item) extends ovm_subscriber#(T
 		sem.put;
 	endtask
 	
-	///@brief   ”äŠr(ƒAƒEƒgƒI[ƒ_[)
-	///@details Šú‘Ò’l‚ÆŠÏ‘ª’l‚ÌŠÔ‚Åˆê’v‚·‚éƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€‚ª‚ ‚é‚©
-	///         ‚Ç‚¤‚©‚ğ‘“–‚½‚è‚Åƒ`ƒFƒbƒN‚µ‚Ü‚·B
-	///         ˆê’v‚µ‚½ê‡‚ÍAˆê’v‚µ‚½Šú‘Ò’lEŠÏ‘ª’l‚ğƒŠƒXƒg‚©‚çíœ‚µ‚Ü‚·B
-	///         ƒAƒ‹ƒSƒŠƒYƒ€ãA•sˆê’v‚Í”­¶‚µ‚Ü‚¹‚ñB
+	///@brief   æ¯”è¼ƒ(ã‚¢ã‚¦ãƒˆã‚ªãƒ¼ãƒ€ãƒ¼)
+	///@details æœŸå¾…å€¤ã¨è¦³æ¸¬å€¤ã®é–“ã§ä¸€è‡´ã™ã‚‹ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚‹ã‹
+	///         ã©ã†ã‹ã‚’ç·å½“ãŸã‚Šã§ãƒã‚§ãƒƒã‚¯ã—ã¾ã™ã€‚
+	///         ä¸€è‡´ã—ãŸå ´åˆã¯ã€ä¸€è‡´ã—ãŸæœŸå¾…å€¤ãƒ»è¦³æ¸¬å€¤ã‚’ãƒªã‚¹ãƒˆã‹ã‚‰å‰Šé™¤ã—ã¾ã™ã€‚
+	///         ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ä¸Šã€ä¸ä¸€è‡´ã¯ç™ºç”Ÿã—ã¾ã›ã‚“ã€‚
 	virtual function void check_item_outorder;
 		T tr;
 		
-		cmp.show_max = 0; // ”äŠrŒ‹‰Ê‚ğ•\¦‚³‚¹‚È‚¢
+		cmp.show_max = 0; // æ¯”è¼ƒçµæœã‚’è¡¨ç¤ºã•ã›ãªã„
 		if(dat.size>0 && exp.size>0)begin
 			foreach(dat[m])begin : loop
 				foreach(exp[n])begin
@@ -92,10 +92,10 @@ class scoreboard_subscriber#(type T=ovm_sequence_item) extends ovm_subscriber#(T
 		end
 	endfunction
 	
-	///@brief   ”äŠr(ƒCƒ“ƒI[ƒ_[)
-	///@details Šú‘Ò’l‚ÆŠÏ‘ª’l‚ÌŠÔ‚Åˆê’v‚·‚éƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€‚ª‚ ‚é‚©
-	///         ‚Ç‚¤‚©‚ğ‡”Ô‚Éƒ`ƒFƒbƒN‚µ‚Ü‚·B
-	///         ˆê’v‚µ‚½ê‡‚ÍAˆê’v‚µ‚½Šú‘Ò’lEŠÏ‘ª’l‚ğƒŠƒXƒg‚©‚çíœ‚µ‚Ü‚·B
+	///@brief   æ¯”è¼ƒ(ã‚¤ãƒ³ã‚ªãƒ¼ãƒ€ãƒ¼)
+	///@details æœŸå¾…å€¤ã¨è¦³æ¸¬å€¤ã®é–“ã§ä¸€è‡´ã™ã‚‹ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚‹ã‹
+	///         ã©ã†ã‹ã‚’é †ç•ªã«ãƒã‚§ãƒƒã‚¯ã—ã¾ã™ã€‚
+	///         ä¸€è‡´ã—ãŸå ´åˆã¯ã€ä¸€è‡´ã—ãŸæœŸå¾…å€¤ãƒ»è¦³æ¸¬å€¤ã‚’ãƒªã‚¹ãƒˆã‹ã‚‰å‰Šé™¤ã—ã¾ã™ã€‚
 	virtual function void check_item_inorder;
 		T tr;
 		
@@ -112,10 +112,10 @@ class scoreboard_subscriber#(type T=ovm_sequence_item) extends ovm_subscriber#(T
 		end
 	endfunction
 	
-	///@brief   ”äŠr(ƒpƒPƒbƒg”‚Ì‚İ)
-	///@details Šú‘Ò’l‚ÆŠÏ‘ª’l‚Ì”‚ªˆê’v‚·‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚µ‚Ü‚·B
-	///         ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒAƒCƒeƒ€‚Ì’†g‚Íƒ`ƒFƒbƒN‚ğs‚¢‚Ü‚¹‚ñB
-	///         ƒAƒ‹ƒSƒŠƒYƒ€ãA•sˆê’v‚Í”­¶‚µ‚Ü‚¹‚ñB
+	///@brief   æ¯”è¼ƒ(ãƒ‘ã‚±ãƒƒãƒˆæ•°ã®ã¿)
+	///@details æœŸå¾…å€¤ã¨è¦³æ¸¬å€¤ã®æ•°ãŒä¸€è‡´ã™ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã—ã¾ã™ã€‚
+	///         ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¢ã‚¤ãƒ†ãƒ ã®ä¸­èº«ã¯ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã„ã¾ã›ã‚“ã€‚
+	///         ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ä¸Šã€ä¸ä¸€è‡´ã¯ç™ºç”Ÿã—ã¾ã›ã‚“ã€‚
 	virtual function void check_item_countonly;
 		while(dat.size>0 && exp.size>0)begin
 			exp.delete(0);
@@ -123,9 +123,9 @@ class scoreboard_subscriber#(type T=ovm_sequence_item) extends ovm_subscriber#(T
 		end
 	endfunction
 	
-	///@brief   ”äŠr‚µ‚È‚¢
-	///@details ƒ`ƒFƒbƒN“®ì‚ğs‚¢‚Ü‚¹‚ñB
-	///         Šú‘Ò’l‚ÆŠÏ‘ª’l‚Ì”‚ğƒŒƒ|[ƒg‚·‚é‚Ì‚İ‚Å‚·B
+	///@brief   æ¯”è¼ƒã—ãªã„
+	///@details ãƒã‚§ãƒƒã‚¯å‹•ä½œã‚’è¡Œã„ã¾ã›ã‚“ã€‚
+	///         æœŸå¾…å€¤ã¨è¦³æ¸¬å€¤ã®æ•°ã‚’ãƒ¬ãƒãƒ¼ãƒˆã™ã‚‹ã®ã¿ã§ã™ã€‚
 	virtual function void check_item_nocomp;
 		while(exp.size>0)begin
 			exp.delete(0);
@@ -135,10 +135,10 @@ class scoreboard_subscriber#(type T=ovm_sequence_item) extends ovm_subscriber#(T
 		end
 	endfunction
 	//////////////////////////////////////////////////////////////////////////@}
-	///@name OVMƒtƒF[ƒY
-	///      OVM•W€‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ƒtƒF[ƒYƒƒ\ƒbƒh
+	///@name OVMãƒ•ã‚§ãƒ¼ã‚º
+	///      OVMæ¨™æº–ã®ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ã‚§ãƒ¼ã‚ºãƒ¡ã‚½ãƒƒãƒ‰
 	//////////////////////////////////////////////////////////////////////////@{
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	function new (string name="ScoreBoard" ,ovm_component parent=null);
 		super.new(name, parent);
 		sem          = new(1);
@@ -149,7 +149,7 @@ class scoreboard_subscriber#(type T=ovm_sequence_item) extends ovm_subscriber#(T
 		error_num    = 0;
 		collect_num  = 0;
 	endfunction
-	/// ƒŒƒ|[ƒg
+	/// ãƒ¬ãƒãƒ¼ãƒˆ
 	virtual function void report;
 		if(exp_item_num==0 && dat_item_num==0)begin
 			if(rule!=NO_COMPARE)begin
@@ -212,17 +212,17 @@ class scoreboard_subscriber#(type T=ovm_sequence_item) extends ovm_subscriber#(T
 		end
 	endfunction
 	
-	/// ƒXƒRƒAƒ{[ƒh‚Ì‰Šú‰»
+	/// ã‚¹ã‚³ã‚¢ãƒœãƒ¼ãƒ‰ã®åˆæœŸåŒ–
 	virtual function void reset;
-		exp = {}; // Queue‚ÌƒNƒŠƒA
-		dat = {}; // Queue‚ÌƒNƒŠƒA
+		exp = {}; // Queueã®ã‚¯ãƒªã‚¢
+		dat = {}; // Queueã®ã‚¯ãƒªã‚¢
 		dat_item_num = 0;
 		exp_item_num = 0;
 		error_num    = 0;
 		collect_num  = 0;
 	endfunction
 	
-	/// ŠÏ‘ª’lƒAƒiƒŠƒVƒXƒGƒNƒXƒ|[ƒgˆ—
+	/// è¦³æ¸¬å€¤ã‚¢ãƒŠãƒªã‚·ã‚¹ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆå‡¦ç†
 	virtual function void write(T t);
 		T dat;
 		$cast(dat,t.clone());

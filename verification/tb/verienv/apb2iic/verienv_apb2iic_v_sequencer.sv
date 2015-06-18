@@ -9,7 +9,7 @@
 // Revision      : $Revision: 1.5 $
 // Last Update   : $Date: 2013/07/16 05:33:01 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-// ƒo[ƒ`ƒƒƒ‹ƒV[ƒPƒ“ƒT
+// ãƒãƒ¼ãƒãƒ£ãƒ«ã‚·ãƒ¼ã‚±ãƒ³ã‚µ
 /////////////////////////////////////////////////////////////////////////////
 typedef class ovm_sequencer;
 class verienv_apb2iic_v_sequencer extends ovm_sequencer#(ovm_sequence_item,ovm_sequence_item);
@@ -19,9 +19,9 @@ class verienv_apb2iic_v_sequencer extends ovm_sequencer#(ovm_sequence_item,ovm_s
 		`ovm_update_sequence_lib
 	endfunction : new
 	
-	verienv_apb2iic_config               m_config;    ///< ŒŸØŠÂ‹«Ý’è’l
-	protected virtual verienv_apb2iic_if intf;        ///< ŒŸØŠÂ‹«—pƒCƒ“ƒ^[ƒtƒF[ƒX
-//	hoge_v_sequencer                 hoge_v_seqr;  ///< hogeƒ‚ƒfƒ‹§Œä
+	verienv_apb2iic_config               m_config;    ///< æ¤œè¨¼ç’°å¢ƒè¨­å®šå€¤
+	protected virtual verienv_apb2iic_if intf;        ///< æ¤œè¨¼ç’°å¢ƒç”¨ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
+//	hoge_v_sequencer                 hoge_v_seqr;  ///< hogeãƒ¢ãƒ‡ãƒ«åˆ¶å¾¡
 	
 	function void build();
 		m_config = verienv_apb2iic_config::get_config(this);

@@ -9,15 +9,15 @@
 // Revision      : $Revision: 1.3 $
 // Last Update   : $Date: 2012/03/26 12:20:12 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-// ƒeƒXƒgŠÂ‹«ˆê——
+// ãƒ†ã‚¹ãƒˆç’°å¢ƒä¸€è¦§
 /////////////////////////////////////////////////////////////////////////////
 
-// ƒeƒXƒgŠÂ‹«
+// ãƒ†ã‚¹ãƒˆç’°å¢ƒ
 `include "test/verienv_apb2iic_test0001_test.sv"
 `include "test/verienv_apb2iic_test0002_test.sv"
 //TEST//
 
-// ƒeƒXƒgƒVƒiƒŠƒI
+// ãƒ†ã‚¹ãƒˆã‚·ãƒŠãƒªã‚ª
 `include "test/verienv_apb2iic_test0001_vseq.sv"
 `include "test/verienv_apb2iic_test0002_vseq.sv"
 //VSEQ//

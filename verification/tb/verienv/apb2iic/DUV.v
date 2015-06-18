@@ -9,7 +9,7 @@
 // Revision      : $Revision: 1.2 $
 // Last Update   : $Date: 2012/10/19 13:13:44 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-// TOP検証用トップモジュール
+// TOP讀懆ｨｼ逕ｨ繝医ャ繝励Δ繧ｸ繝･繝ｼ繝ｫ
 /////////////////////////////////////////////////////////////////////////////
 module DUV(
 	verienv_apb2iic_if   port_if       // 
@@ -17,7 +17,7 @@ module DUV(
 	timeunit      1ps;
 	timeprecision 1ps;
 	
-	//トップモジュール                                  // <DUV>
+	//繝医ャ繝励Δ繧ｸ繝･繝ｼ繝ｫ                                  // <DUV>
 	i2c u_i2c (
 		.PCLK             (port_if.pclk             ) , // in
 		.PRESETn          (port_if.presetn          ) , // in

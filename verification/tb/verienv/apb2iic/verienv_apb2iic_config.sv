@@ -9,7 +9,7 @@
 // Revision      : $Revision: 1.2 $
 // Last Update   : $Date: 2012/03/26 12:04:16 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-/// ŒŸØŠÂ‹«ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“
+/// æ¤œè¨¼ç’°å¢ƒã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
 /////////////////////////////////////////////////////////////////////////////
 localparam string s_test_config_id     = "verienv_apb2iic_config";
 localparam string s_no_config_error_id = "NoConfigError";
@@ -18,9 +18,9 @@ localparam string s_config_type_error  = "ConfigTypeError";
 class verienv_apb2iic_config extends ovm_object;
 	`ovm_object_utils(verienv_apb2iic_config)
 	
-//	hoge_config             m_hoge_config; ///< hogeƒ‚ƒfƒ‹İ’è
-	virtual verienv_apb2iic_if intf;          ///< ŒŸØŠÂ‹«—pƒCƒ“ƒ^[ƒtƒF[ƒX
-	time sys_clk_cycle;                    ///< ƒVƒXƒeƒ€ƒNƒƒbƒNüŠú
+//	hoge_config             m_hoge_config; ///< hogeãƒ¢ãƒ‡ãƒ«è¨­å®š
+	virtual verienv_apb2iic_if intf;          ///< æ¤œè¨¼ç’°å¢ƒç”¨ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
+	time sys_clk_cycle;                    ///< ã‚·ã‚¹ãƒ†ãƒ ã‚¯ãƒ­ãƒƒã‚¯å‘¨æœŸ
 	
 	function new(string name = "");
 		super.new(name);

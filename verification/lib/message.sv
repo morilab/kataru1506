@@ -1,4 +1,4 @@
-// $B%$%s%?!<%U%'!<%9MQ<BAu%Q%C%1!<%8(B
+// インターフェース用実装パッケージ
 package message_pkg;
 	class msg_if;
 		event  ev_info;

@@ -9,13 +9,13 @@
 // Revision      : $Revision: 1.1 $
 // Last Update   : $Date: 2012/03/26 05:38:30 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-/// ÈÆÍÑ¥¹¥³¥¢¥Ü¡¼¥É
+/// æ±Žç”¨ã‚¹ã‚³ã‚¢ãƒœãƒ¼ãƒ‰
 /////////////////////////////////////////////////////////////////////////////
 package ovm_ScoreBoard_pkg;
 	`include "vt100.svh"
 	`include "ovm_macros.svh"
 	import ovm_pkg::*;
-	// Á´ÂÎ
+	// å…¨ä½“
 	`include "scoreboard_share.sv"
 	`include "scoreboard_subscriber.sv"
 	`include "scoreboard_ram_subscriber.sv"

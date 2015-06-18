@@ -22,7 +22,7 @@ class packet_item extends ovm_sequence_item;
 		`ovm_field_array_int(data ,OVM_ALL_ON)
 	`ovm_object_utils_end
 
-	/// オブジェクト情報
+	/// 繧ｪ繝悶ず繧ｧ繧ｯ繝域ュ蝣ｱ
 	function string convert2string();
 		string msg = "PacketItem =";
 		foreach(data[n]) msg = $psprintf("%s 0x%02x",msg ,data[n]);

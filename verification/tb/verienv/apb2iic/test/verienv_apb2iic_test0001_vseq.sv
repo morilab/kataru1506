@@ -9,7 +9,7 @@
 // Revision      : $Revision: 1.3 $
 // Last Update   : $Date: 2012/03/26 12:24:01 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-/// ŒŸØƒVƒiƒŠƒI
+/// æ¤œè¨¼ã‚·ãƒŠãƒªã‚ª
 /////////////////////////////////////////////////////////////////////////////
 class verienv_apb2iic_test0001_vseq extends verienv_apb2iic_base_vseq;
 	`ovm_sequence_utils(verienv_apb2iic_test0001_vseq, verienv_apb2iic_v_sequencer)
@@ -18,13 +18,13 @@ class verienv_apb2iic_test0001_vseq extends verienv_apb2iic_base_vseq;
 	endfunction
 	
 	virtual task body();
-		// ƒŠƒZƒbƒg
+		// ãƒªã‚»ãƒƒãƒˆ
 		reset;
 		
-		// ŒŸØ“à—e
+		// æ¤œè¨¼å†…å®¹
 		$display("%s<<<<<<< apb2iic_test0001 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%s",{`VT100_CYAN},{`VT100_NORMAL});
 		
-		// I—¹ˆ—
+		// çµ‚äº†å‡¦ç†
 		wait_clk(100);
 		global_stop_request();
 	endtask

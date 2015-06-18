@@ -9,20 +9,20 @@
 // Revision      : $Revision: 1.1 $
 // Last Update   : $Date: 2012/03/26 06:00:20 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-/// ŒŸØŠÂ‹«
+/// æ¤œè¨¼ç’°å¢ƒ
 /////////////////////////////////////////////////////////////////////////////
 package verienv_apb2iic_pkg;
 	`include "vt100.svh"
 	`include "ovm_macros.svh"
 	import ovm_pkg::*;
 	import ovm_container_pkg::*;
-	import ovm_ScoreBoard_pkg::*; ///< OVMƒXƒRƒAƒ{[ƒh
-	/* •K—v‚Èƒ‚ƒfƒ‹‚ª‚ ‚éê‡‚Í‚±‚±‚ÅƒCƒ“ƒ|[ƒg‚·‚é */
+	import ovm_ScoreBoard_pkg::*; ///< OVMã‚¹ã‚³ã‚¢ãƒœãƒ¼ãƒ‰
+	/* å¿…è¦ãªãƒ¢ãƒ‡ãƒ«ãŒã‚ã‚‹å ´åˆã¯ã“ã“ã§ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹ */
 	
-	`include "verienv_apb2iic_share.sv"       // ‹¤’Ê•Ï”
-	`include "verienv_apb2iic_config.sv"      // ƒRƒ“ƒtƒBƒO
-	`include "verienv_apb2iic_v_sequencer.sv" // ‘S‘Ì§ŒäƒV[ƒPƒ“ƒT
-	`include "verienv_apb2iic_seq_lib.sv"     // ƒV[ƒPƒ“ƒXƒ‰ƒCƒuƒ‰ƒŠ
-	`include "verienv_apb2iic_base_test.sv"   // ƒeƒXƒgŠî–{İ’è
-	`include "verienv_apb2iic_test_list.sv"   // Œ±€–Úˆê——
+	`include "verienv_apb2iic_share.sv"       // å…±é€šå¤‰æ•°
+	`include "verienv_apb2iic_config.sv"      // ã‚³ãƒ³ãƒ•ã‚£ã‚°
+	`include "verienv_apb2iic_v_sequencer.sv" // å…¨ä½“åˆ¶å¾¡ã‚·ãƒ¼ã‚±ãƒ³ã‚µ
+	`include "verienv_apb2iic_seq_lib.sv"     // ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+	`include "verienv_apb2iic_base_test.sv"   // ãƒ†ã‚¹ãƒˆåŸºæœ¬è¨­å®š
+	`include "verienv_apb2iic_test_list.sv"   // è©¦é¨“é …ç›®ä¸€è¦§
 endpackage

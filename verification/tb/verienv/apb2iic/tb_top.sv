@@ -9,44 +9,44 @@
 // Revision      : $Revision: 1.3 $
 // Last Update   : $Date: 2012/10/19 13:13:44 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-// ŒŸØŠÂ‹«ƒ‚ƒWƒ…[ƒ‹
-// ‘S‘ÌŒŸØŠÂ‹«
+// æ¤œè¨¼ç’°å¢ƒãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+// å…¨ä½“æ¤œè¨¼ç’°å¢ƒ
 /////////////////////////////////////////////////////////////////////////////
-// OVM•W€ƒ‰ƒCƒuƒ‰ƒŠ
-import ovm_pkg::*;            ///< OVM•W€ƒ‰ƒCƒuƒ‰ƒŠ
-import ovm_container_pkg::*;  ///< OVM—pƒRƒ“ƒeƒiƒ‰ƒCƒuƒ‰ƒŠ
+// OVMæ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+import ovm_pkg::*;            ///< OVMæ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+import ovm_container_pkg::*;  ///< OVMç”¨ã‚³ãƒ³ãƒ†ãƒŠãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 `include "ovm_macros.svh"
 
-// ƒCƒ“ƒ^[ƒtƒF[ƒXéŒ¾
-`include "verienv_apb2iic_if.sv" ///< ŒŸØŠÂ‹«ƒCƒ“ƒ^[ƒtƒF[ƒX
+// ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹å®£è¨€
+`include "verienv_apb2iic_if.sv" ///< æ¤œè¨¼ç’°å¢ƒã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 
-// ƒ‰ƒbƒp[
+// ãƒ©ãƒƒãƒ‘ãƒ¼
 `include "DUV.v"
 
-/// ŒŸØƒgƒbƒvƒ‚ƒWƒ…[ƒ‹
+/// æ¤œè¨¼ãƒˆãƒƒãƒ—ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 module tb_top();
 	timeunit      1ps;
 	timeprecision 1ps;
 	
-	// OVMƒ‚ƒfƒ‹ƒ‰ƒCƒuƒ‰ƒŠ
-	import verienv_apb2iic_pkg::*;    ///< OVMŒŸØŠÂ‹«
+	// OVMãƒ¢ãƒ‡ãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+	import verienv_apb2iic_pkg::*;    ///< OVMæ¤œè¨¼ç’°å¢ƒ
 	
-	// Œ^éŒ¾
+	// å‹å®£è¨€
 	typedef virtual verienv_apb2iic_if  verienv_t;
 	
-	// ƒCƒ“ƒ^[ƒtƒF[ƒX
+	// ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 	verienv_apb2iic_if verienv_port();
 	
-	// ŒŸØRTLƒgƒbƒv
+	// æ¤œè¨¼RTLãƒˆãƒƒãƒ—
 	DUV DUV (                                 // <DUV>
 		.port_if          (verienv_port     ) // verienv_apb2iic_if
 	);                                        // </>
 	
-	///< OVMˆ—
+	///< OVMå‡¦ç†
 	initial begin
-	//	$timeformat(-12.0,"[ps]",16); // ModelSim”ñ‘Î‰
+	//	$timeformat(-12.0,"[ps]",16); // ModelSiméå¯¾å¿œ
 		ovm_container#(verienv_t)::set_value_in_global_config("VERIENV_PORT"  ,verienv_port);
-		ovm_container#(time     )::set_value_in_global_config("SYS_CLK_CYCLE" ,10*1000);       // ƒNƒƒbƒNüŠú[ps]
+		ovm_container#(time     )::set_value_in_global_config("SYS_CLK_CYCLE" ,10*1000);       // ã‚¯ãƒ­ãƒƒã‚¯å‘¨æœŸ[ps]
 		run_test();
 	end
 endmodule

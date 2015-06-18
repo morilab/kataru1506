@@ -9,42 +9,42 @@
 // Revision      : $Revision: 1.2 $
 // Last Update   : $Date: 2012/03/26 12:04:16 $ + 09:00:00
 //<Additional Comments>//////////////////////////////////////////////////////
-/// ŒŸØŠÂ‹«ƒ‚ƒfƒ‹ƒgƒbƒv(ƒx[ƒX)
+/// æ¤œè¨¼ç’°å¢ƒãƒ¢ãƒ‡ãƒ«ãƒˆãƒƒãƒ—(ãƒ™ãƒ¼ã‚¹)
 /////////////////////////////////////////////////////////////////////////////
 class verienv_apb2iic_base_test extends ovm_test;
 	`ovm_component_utils(verienv_apb2iic_base_test)
 	
-	// ‹@”\ƒ‚ƒfƒ‹
-	verienv_apb2iic_config       m_config;         ///< ƒeƒXƒgƒRƒ“ƒtƒBƒO
-	verienv_apb2iic_v_sequencer  sys_v_sequencer;  ///< ƒV[ƒPƒ“ƒT
-	ovm_table_printer         printer;          ///< ƒƒbƒZ[ƒW•\¦—pƒvƒŠƒ“ƒ^
+	// æ©Ÿèƒ½ãƒ¢ãƒ‡ãƒ«
+	verienv_apb2iic_config       m_config;         ///< ãƒ†ã‚¹ãƒˆã‚³ãƒ³ãƒ•ã‚£ã‚°
+	verienv_apb2iic_v_sequencer  sys_v_sequencer;  ///< ã‚·ãƒ¼ã‚±ãƒ³ã‚µ
+	ovm_table_printer         printer;          ///< ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤ºç”¨ãƒ—ãƒªãƒ³ã‚¿
 	
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	function new(string name="" ,ovm_component parent=null);
 		super.new(name ,parent);
-		m_config = new; // ÅãˆÊƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“ƒNƒ‰ƒX‚Ìì¬
+		m_config = new; // æœ€ä¸Šä½ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹ã®ä½œæˆ
 	endfunction
 	
-	/// ŠÂ‹«\’z
+	/// ç’°å¢ƒæ§‹ç¯‰
 	virtual function void build;
 		super.build;
-		// ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“ˆ—
+		// ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å‡¦ç†
 		$display("Config VERIENV_PORT");
 		m_config.intf          = ovm_container#(virtual verienv_apb2iic_if)::get_value_from_config(this ,"VERIENV_PORT");
 		m_config.sys_clk_cycle = ovm_container#(time                   )::get_value_from_config(this ,"SYS_CLK_CYCLE");
 		
-		// ƒI[ƒo[ƒ‰ƒCƒh
+		// ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		
-		// ƒRƒ“ƒ|[ƒlƒ“ƒg¶¬
+		// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆç”Ÿæˆ
 		sys_v_sequencer = verienv_apb2iic_v_sequencer::type_id::create  ("sys_v_sequencer" ,this);
 		
-		// ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“ƒIƒuƒWƒFƒNƒg‚Ì“WŠJ
+		// ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å±•é–‹
 		set_config_object("*"             ,"verienv_apb2iic_config" ,m_config               ,0);
 		
-		// ƒVƒXƒeƒ€ƒNƒƒbƒNİ’è
+		// ã‚·ã‚¹ãƒ†ãƒ ã‚¯ãƒ­ãƒƒã‚¯è¨­å®š
 		m_config.intf.CLK_CYCLE = m_config.sys_clk_cycle;
 		
-		// ƒvƒŠƒ“ƒ^[İ’è
+		// ãƒ—ãƒªãƒ³ã‚¿ãƒ¼è¨­å®š
 		printer = new();
 		printer.knobs.name_width  = 25+25;
 		printer.knobs.type_width  = 20+10;
@@ -52,21 +52,21 @@ class verienv_apb2iic_base_test extends ovm_test;
 		printer.knobs.value_width = 20+10;
 	endfunction
 	
-	/// ƒRƒ“ƒ|[ƒlƒ“ƒgŠÔÚ‘±
+	/// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆé–“æ¥ç¶š
 	function void connect;
 	//	sys_v_sequencer.hoge_v_seqr = hoge.v_sequencer;
 	endfunction
 	
-	/// ŒŸØŠÂ‹«\¬‚Ì•\¦
+	/// æ¤œè¨¼ç’°å¢ƒæ§‹æˆã®è¡¨ç¤º
 	function void end_of_elaboration();
 		`ovm_info(get_type_name(),$psprintf("<<< Verification Infomation >>>\n%s", this.sprint(printer)), OVM_LOW)
 	endfunction : end_of_elaboration
 	
-	/// ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“
+	/// ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
 	task run;
 		`ovm_info("INFO",$psprintf("%s--- Simulation Start ---%s",{`VT100_GREEN},{`VT100_NORMAL}),OVM_LOW)
-		// ƒVƒXƒeƒ€ƒNƒƒbƒN‚Ì¶¬
-		// ƒVƒiƒŠƒIƒ^ƒCƒ€ƒAƒEƒg(10msec)
+		// ã‚·ã‚¹ãƒ†ãƒ ã‚¯ãƒ­ãƒƒã‚¯ã®ç”Ÿæˆ
+		// ã‚·ãƒŠãƒªã‚ªã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ(10msec)
 		for(int i=0;i<10;i++)begin
 			$display("%ssimulation time = %12.3f[ns]%s",{`VT100_YELLOW},$time/1000.0,{`VT100_NORMAL});
 			#1ms;
