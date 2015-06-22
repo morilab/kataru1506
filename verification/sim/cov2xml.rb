@@ -40,10 +40,10 @@ fp.each{ |line|
             mod_name = $1
             filepath = $2
             @classes  = package.add_element("classes")
-            @class1   = @classes.add_element("class",{"name"=>mod_name,"filename"=>filepath})
-            @methods  = @class1.add_element("methods")
+            @class    = @classes.add_element("class",{"name"=>mod_name,"filename"=>filepath})
+            @methods  = @class.add_element("methods")
             @method   = @methods.add_element("method",{"name"=>mod_name,"signature"=>"#()V","line-rate"=>"0.3","branch-rate"=>"0.7"})
-            @lines    = @method.add_element("lines")
+            @lines    = @class.add_element("lines")
         elsif line=~/^\s+(\d+):\s/ then
             line      = @lines.add_element("line",{"number"=>$1,"hits"=>"0","branch"=>"false"})
         end
