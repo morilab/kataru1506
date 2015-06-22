@@ -8,7 +8,7 @@ doc << REXML::XMLDecl.new('1.0','UTF-8')
 
 coverage = doc.add_element("coverage",{"ccn"=>"0.0","version"=>"0.1"})
 sources  = coverage.add_element("sources")
-source   = sources.add_element("source").add_text(".")
+source   = sources.add_element("source").add_text("./verification/sim/")
 package  = coverage.add_element("package",{"name"=>"Pj1234"})
 
 module STATE
