@@ -233,7 +233,7 @@ if(-e dump.vcd) then
 
 	\rm -r -f merge.vcd
         covered merge  -o coverage.cdd ${PATH_COV}/*.cdd
-        covered report -o coverage.rpt coverage.cdd
+        covered report -d v -o coverage.rpt coverage.cdd
 endif
 
 echo "シミュレーションが終了しました。"
