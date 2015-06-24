@@ -61,7 +61,7 @@ def parse(db,report)
             when /Module: (\w+), File: ([\w\.\/]+)/ then
                 name = $1
                 db[name]             = Hash.new unless db.has_key?(name)
-                db[name][TYPE::LINE] = Hash.new unless db.has_key?(TYPE::LINE)
+                db[name][TYPE::LINE] = Hash.new unless db[name].has_key?(TYPE::LINE)
                 db[name][TYPE::LINE]["file"] = $2
                 db[name][TYPE::LINE][MODE::HIT]  = Array.new if db[name][TYPE::LINE][MODE::HIT].nil?
                 db[name][TYPE::LINE][MODE::MISS] = Array.new if db[name][TYPE::LINE][MODE::MISS].nil?
@@ -80,7 +80,7 @@ def parse(db,report)
             when /Module: (\w+), File: ([\w\.\/]+)/ then
                 name = $1
                 db[name]              = Hash.new unless db.has_key?(name)
-                db[name][TYPE::COMBI] = Hash.new unless db.has_key?(TYPE::COMBI)
+                db[name][TYPE::COMBI] = Hash.new unless db[name].has_key?(TYPE::COMBI)
                 db[name][TYPE::COMBI]["file"] = $2
                 db[name][TYPE::COMBI][MODE::HIT]  = Hash.new if db[name][TYPE::COMBI][MODE::HIT].nil?
                 db[name][TYPE::COMBI][MODE::MISS] = Hash.new if db[name][TYPE::COMBI][MODE::MISS].nil?
@@ -131,6 +131,7 @@ db.each{ |k,v|
     #v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0"})}
     #v[TYPE::LINE][MODE::HIT ].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"1"})}
     v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0","branch"=>"false"})}
+    p v[TYPE::LINE][MODE::HIT ]
     v[TYPE::LINE][MODE::HIT ].each{ |num|
         if v[TYPE::COMBI][MODE::MISS].has_key?(num) then
             line = lines.add_element("line",{"number"=>num,"hits"=>"1","branch"=>"true","condition-coverage"=>"0% (0/2)"})
