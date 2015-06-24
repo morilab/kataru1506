@@ -124,7 +124,7 @@ package  = packages.add_element("package",{"name"=>"project name"})
 
 classes   = package.add_element("classes")
 db.each{ |k,v|
-    clas     = classes.add_element("class",{"name"=>k ,"filename"=>v["file"]})
+    clas     = classes.add_element("class",{"name"=>k ,"filename"=>v[TYPE::LINE]["file"]})
     #methods  = clas.add_element("methods")
     #method   = methods.add_element("method",{"name"=>k ,"signature"=>"#()V"})
     lines    = clas.add_element("lines")
