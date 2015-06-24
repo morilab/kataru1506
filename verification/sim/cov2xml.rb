@@ -128,23 +128,23 @@ db.each{ |k,v|
     #methods  = clas.add_element("methods")
     #method   = methods.add_element("method",{"name"=>k ,"signature"=>"#()V"})
     lines    = clas.add_element("lines")
-    v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0"})}
-    v[TYPE::LINE][MODE::HIT ].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"1"})}
-    #v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0","branch"=>"false"})}
-    #v[TYPE::LINE][MODE::HIT ].each{ |num|
-    #    if v[TYPE::COMBI][MODE::MISS].has_key?(num) then
-    #        line = lines.add_element("line",{"number"=>num,"hits"=>"1","branch"=>"true","condition-coverage"=>"0% (0/2)"})
-    #        conditions = line.add_element("conditions")
-    #        v[TYPE::COMBI][MODE::MISS][num].each{ |exp_num,exp_cnt|
-    #            miss = exp_cnt.to_i
-    #            hit = v[TYPE::COMBI][MODE::HIT][num][exp_num].to_i
-    #            condition = conditions.add_element("condition",{"number"=>exp_num,"type"=>"jump","coverage"=>sprintf("%f%",hit/(hit+miss).to_f*100)})
-    #        #   condition = conditions.add_element("condition",{"number"=>exp_num,"type"=>"jump","coverage"=>sprintf("%d/%d",hit,(hit+miss))})
-    #        }
-    #    else
-    #        line = lines.add_element("line",{"number"=>num,"hits"=>"1","branch"=>"false"})
-    #    end
-    #}
+    #v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0"})}
+    #v[TYPE::LINE][MODE::HIT ].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"1"})}
+    v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0","branch"=>"false"})}
+    v[TYPE::LINE][MODE::HIT ].each{ |num|
+        if v[TYPE::COMBI][MODE::MISS].has_key?(num) then
+            line = lines.add_element("line",{"number"=>num,"hits"=>"1","branch"=>"true","condition-coverage"=>"0% (0/2)"})
+            conditions = line.add_element("conditions")
+            v[TYPE::COMBI][MODE::MISS][num].each{ |exp_num,exp_cnt|
+                miss = exp_cnt.to_i
+                hit = v[TYPE::COMBI][MODE::HIT][num][exp_num].to_i
+                condition = conditions.add_element("condition",{"number"=>exp_num,"type"=>"jump","coverage"=>sprintf("%f%",hit/(hit+miss).to_f*100)})
+            #   condition = conditions.add_element("condition",{"number"=>exp_num,"type"=>"jump","coverage"=>sprintf("%d/%d",hit,(hit+miss))})
+            }
+        else
+            line = lines.add_element("line",{"number"=>num,"hits"=>"1","branch"=>"false"})
+        end
+    }
 }
 
 fmt = REXML::Formatters::Pretty.new
