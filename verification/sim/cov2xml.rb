@@ -65,10 +65,6 @@ db = parse(db ,out.split("\n"))
 out,err,st = Open3.capture3([command,opt_miss,cdd_file].join(" "))
 db = parse(db ,out.split("\n"))
 
-db.each{ |k,v|
-    printf("%s Hit=%d Miss=%d\n",k,v[MODE::HIT].length ,v[MODE::MISS].length)
-}
-
 # XMLの出力
 doc = REXML::Document.new
 doc << REXML::XMLDecl.new('1.0','UTF-8')
