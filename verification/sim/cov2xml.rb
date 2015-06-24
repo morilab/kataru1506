@@ -128,7 +128,7 @@ db.each{ |k,v|
     #methods  = clas.add_element("methods")
     #method   = methods.add_element("method",{"name"=>k ,"signature"=>"#()V"})
     lines    = clas.add_element("lines")
-    v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0"})}
+    v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0","branch"=>"false"})}
     v[TYPE::LINE][MODE::HIT ].each{ |num|
         if v[TYPE::COMBI][MODE::MISS].has_key?(num) then
             line = lines.add_element("line",{"number"=>num,"hits"=>"1","branch"=>"true"})
