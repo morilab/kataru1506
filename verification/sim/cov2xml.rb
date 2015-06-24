@@ -131,7 +131,6 @@ db.each{ |k,v|
     #v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0"})}
     #v[TYPE::LINE][MODE::HIT ].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"1"})}
     v[TYPE::LINE][MODE::MISS].each{ |num| line = lines.add_element("line",{"number"=>num,"hits"=>"0","branch"=>"false"})}
-    p v[TYPE::LINE][MODE::HIT ]
     v[TYPE::LINE][MODE::HIT ].each{ |num|
         if v[TYPE::COMBI][MODE::MISS].has_key?(num) then
             line = lines.add_element("line",{"number"=>num,"hits"=>"1","branch"=>"true","condition-coverage"=>"0% (0/2)"})
