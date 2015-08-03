@@ -1,0 +1,171 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2014 Altera Corporation. All rights reserved.
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, the Altera Quartus II License Agreement,
+# the Altera MegaCore Function License Agreement, or other 
+# applicable license agreement, including, without limitation, 
+# that your use is for the sole purpose of programming logic 
+# devices manufactured by Altera and sold by Altera or its 
+# authorized distributors.  Please refer to the applicable 
+# agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II 64-Bit
+# Version 14.1.0 Build 186 12/03/2014 SJ Web Edition
+# Date created = 11:17:36  August 03, 2015
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		kataru1506_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "Cyclone IV GX"
+set_global_assignment -name DEVICE EP4CGX75CF23C6
+set_global_assignment -name TOP_LEVEL_ENTITY i2c
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 14.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:17:36  AUGUST 03, 2015"
+set_global_assignment -name LAST_QUARTUS_VERSION 14.1.0
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment IOBANK_3 -to PADDR[31]
+set_location_assignment IOBANK_3 -to PADDR[30]
+set_location_assignment IOBANK_3 -to PADDR[29]
+set_location_assignment IOBANK_3 -to PADDR[28]
+set_location_assignment IOBANK_3 -to PADDR[27]
+set_location_assignment IOBANK_3 -to PADDR[26]
+set_location_assignment IOBANK_3 -to PADDR[25]
+set_location_assignment IOBANK_3 -to PADDR[24]
+set_location_assignment IOBANK_3 -to PADDR[23]
+set_location_assignment IOBANK_3 -to PADDR[22]
+set_location_assignment IOBANK_3 -to PADDR[21]
+set_location_assignment IOBANK_3 -to PADDR[20]
+set_location_assignment IOBANK_3 -to PADDR[19]
+set_location_assignment IOBANK_3 -to PADDR[18]
+set_location_assignment IOBANK_3 -to PADDR[17]
+set_location_assignment IOBANK_3 -to PADDR[16]
+set_location_assignment IOBANK_3 -to PADDR[15]
+set_location_assignment IOBANK_3 -to PADDR[14]
+set_location_assignment IOBANK_3 -to PADDR[13]
+set_location_assignment IOBANK_3 -to PADDR[12]
+set_location_assignment IOBANK_3 -to PADDR[11]
+set_location_assignment IOBANK_3 -to PADDR[10]
+set_location_assignment IOBANK_6 -to PRDATA[31]
+set_location_assignment IOBANK_6 -to PRDATA[30]
+set_location_assignment IOBANK_6 -to PRDATA[29]
+set_location_assignment IOBANK_6 -to PRDATA[28]
+set_location_assignment PIN_N22 -to INT_RX
+set_location_assignment PIN_P22 -to INT_TX
+set_location_assignment PIN_M22 -to PCLK
+set_location_assignment PIN_K22 -to PENABLE
+set_location_assignment IOBANK_5 -to PREADY
+set_location_assignment IOBANK_5 -to PRESETn
+set_location_assignment IOBANK_5 -to PSELx
+set_location_assignment IOBANK_5 -to PSLVERR
+set_location_assignment IOBANK_5 -to PWRITE
+set_location_assignment IOBANK_5 -to SCL
+set_location_assignment IOBANK_5 -to SCL_ENABLE
+set_location_assignment IOBANK_5 -to SDA
+set_location_assignment IOBANK_5 -to SDA_ENABLE
+set_location_assignment IOBANK_5 -to PWDATA[0]
+set_location_assignment IOBANK_5 -to PWDATA[7]
+set_location_assignment IOBANK_5 -to PWDATA[6]
+set_location_assignment IOBANK_5 -to PWDATA[5]
+set_location_assignment IOBANK_5 -to PWDATA[4]
+set_location_assignment IOBANK_5 -to PWDATA[3]
+set_location_assignment IOBANK_5 -to PWDATA[2]
+set_location_assignment IOBANK_5 -to PWDATA[1]
+set_location_assignment IOBANK_6 -to PWDATA[8]
+set_location_assignment IOBANK_6 -to PWDATA[15]
+set_location_assignment IOBANK_6 -to PWDATA[14]
+set_location_assignment IOBANK_6 -to PWDATA[13]
+set_location_assignment IOBANK_6 -to PWDATA[12]
+set_location_assignment IOBANK_6 -to PWDATA[11]
+set_location_assignment IOBANK_6 -to PWDATA[10]
+set_location_assignment IOBANK_6 -to PWDATA[9]
+set_location_assignment IOBANK_5 -to PWDATA[16]
+set_location_assignment IOBANK_5 -to PWDATA[31]
+set_location_assignment IOBANK_5 -to PWDATA[30]
+set_location_assignment IOBANK_5 -to PWDATA[29]
+set_location_assignment IOBANK_5 -to PWDATA[28]
+set_location_assignment IOBANK_5 -to PWDATA[27]
+set_location_assignment IOBANK_5 -to PWDATA[26]
+set_location_assignment IOBANK_5 -to PWDATA[25]
+set_location_assignment IOBANK_5 -to PWDATA[24]
+set_location_assignment IOBANK_5 -to PWDATA[23]
+set_location_assignment IOBANK_5 -to PWDATA[22]
+set_location_assignment IOBANK_5 -to PWDATA[21]
+set_location_assignment IOBANK_5 -to PWDATA[20]
+set_location_assignment IOBANK_5 -to PWDATA[19]
+set_location_assignment IOBANK_5 -to PWDATA[18]
+set_location_assignment IOBANK_5 -to PWDATA[17]
+set_location_assignment IOBANK_7 -to PRDATA[0]
+set_location_assignment IOBANK_7 -to PRDATA[15]
+set_location_assignment IOBANK_7 -to PRDATA[14]
+set_location_assignment IOBANK_7 -to PRDATA[13]
+set_location_assignment IOBANK_7 -to PRDATA[12]
+set_location_assignment IOBANK_7 -to PRDATA[11]
+set_location_assignment IOBANK_7 -to PRDATA[10]
+set_location_assignment IOBANK_7 -to PRDATA[9]
+set_location_assignment IOBANK_7 -to PRDATA[8]
+set_location_assignment IOBANK_7 -to PRDATA[7]
+set_location_assignment IOBANK_7 -to PRDATA[6]
+set_location_assignment IOBANK_7 -to PRDATA[5]
+set_location_assignment IOBANK_7 -to PRDATA[4]
+set_location_assignment IOBANK_7 -to PRDATA[3]
+set_location_assignment IOBANK_7 -to PRDATA[2]
+set_location_assignment IOBANK_7 -to PRDATA[1]
+set_location_assignment IOBANK_6 -to PRDATA[16]
+set_location_assignment IOBANK_6 -to PRDATA[27]
+set_location_assignment IOBANK_8 -to PRDATA[26]
+set_location_assignment IOBANK_8 -to PRDATA[25]
+set_location_assignment IOBANK_8 -to PRDATA[24]
+set_location_assignment IOBANK_8 -to PRDATA[23]
+set_location_assignment IOBANK_8 -to PRDATA[22]
+set_location_assignment IOBANK_8 -to PRDATA[21]
+set_location_assignment IOBANK_8 -to PRDATA[20]
+set_location_assignment IOBANK_8 -to PRDATA[19]
+set_location_assignment IOBANK_8 -to PRDATA[18]
+set_location_assignment IOBANK_8 -to PRDATA[17]
+set_location_assignment IOBANK_6 -to PADDR[0]
+set_location_assignment IOBANK_6 -to PADDR[9]
+set_location_assignment IOBANK_6 -to PADDR[8]
+set_location_assignment IOBANK_6 -to PADDR[7]
+set_location_assignment IOBANK_3A -to PADDR[6]
+set_location_assignment IOBANK_3A -to PADDR[5]
+set_location_assignment IOBANK_4 -to PADDR[4]
+set_location_assignment IOBANK_4 -to PADDR[3]
+set_location_assignment IOBANK_4 -to PADDR[2]
+set_location_assignment IOBANK_4 -to PADDR[1]
+set_global_assignment -name SDC_FILE kataru1506.sdc
+set_global_assignment -name VERILOG_FILE ../../rtl/apbi2c/trunk/rtl/module_i2c.v
+set_global_assignment -name VERILOG_FILE ../../rtl/apbi2c/trunk/rtl/i2c.v
+set_global_assignment -name VERILOG_FILE ../../rtl/apbi2c/trunk/rtl/fifo.v
+set_global_assignment -name VERILOG_FILE ../../rtl/apbi2c/trunk/rtl/apb.v
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
